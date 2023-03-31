@@ -1,0 +1,15 @@
+svg {
+  margin: 0;
+  padding: 0;
+  background: #efefef;
+}
+
+.land {
+  fill: #ccc;
+}
+
+.boundary {
+  fill: none;
+  stroke: #aaa;
+  stroke-width: .5px;
+}

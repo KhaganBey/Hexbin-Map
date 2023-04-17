@@ -2,15 +2,20 @@ import { useState, useEffect } from 'react'
 
 import * as d3 from 'd3'
 
-import './Hex.css'
 import Hexmap from './Hexmap.jsx'
+import Selection from './Selection'
 
 function App() {
   const [mapFile, setMapFile] = useState(null)
   const [data, setData] = useState(null) 
+
+  const [dateRange, setDateRange] = useState(null)
   
   const mapWidth = 1000 
   const mapHeight = 600    
+
+  const chartWidth = 800
+  const chartHeight = 200
 
   const dateFormat = "%d-%m-%Y"
   const projection = d3.geoMercator()
@@ -31,9 +36,12 @@ function App() {
   }, [])
   
   return (
-    <div>
-      <h1>Hexbin Map Title</h1>
-      <Hexmap mapFile={mapFile} data={data} dateFormat={dateFormat} projection={projection} width={mapWidth} height={mapHeight} />
+    <div className="App">
+      <h1>Project Hexglobe</h1>
+      
+      <Hexmap mapFile={mapFile} data={data} dateFormat={dateFormat} projection={projection} width={mapWidth} height={mapHeight} dateRange={dateRange} />
+      
+      <Selection data={data} dateFormat={dateFormat} chartWidth={chartWidth} chartHeight={chartHeight} setDateRange={setDateRange} />  
     </div>
   )
 }

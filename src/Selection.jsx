@@ -1,6 +1,9 @@
+import { useState } from 'react';
+
 import * as d3 from 'd3'
 
-import SelectionChart from "./SelectionChart"
+import SelectionChart from "./SelectionChart";
+import DoughnutChart from './DoughnutChart';
 
 const Selection = props => {
 
@@ -16,8 +19,8 @@ const Selection = props => {
     
     return ( 
         <>
-            <SelectionChart data={chartData} width={props.chartWidth} height={props.chartHeight} dates={dates} setDateRange={props.setDateRange} />
-            <RadialChart />
+            <SelectionChart data={chartData} width={props.chartWidth} height={props.chartHeight} dateFormat={props.dateFormat} dates={dates} setSelection={props.setSelection} />
+            <DoughnutChart data={props.data} width={props.pieWidth} height={props.pieHeight} selection={props.selection} />
         </>    
      );
 }

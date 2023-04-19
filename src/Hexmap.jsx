@@ -4,15 +4,13 @@ import * as d3 from 'd3'
 import {hexbin as Hexbin} from "d3-hexbin"
 import * as topojson from "topojson-client"
 
-import './Hex.css'
+import './App.css'
  
 const Hexmap = (props) => {
     
     const [hexbinGroup, setHexbinGroup] = useState(null)
 
     const mapRef = useRef(null)
-    
-    const formatDate = d3.timeFormat(props.dateFormat)
 
     const path = d3.geoPath()
         .projection(props.projection)   
@@ -24,8 +22,6 @@ const Hexmap = (props) => {
 
     const addMap = () => {
         const map = d3.select(mapRef.current)
-            .attr('width', props.width)
-            .attr('height', props.height)
 
         map.append("path")
             .datum(topojson.feature(props.mapFile, props.mapFile.objects.land))
@@ -80,22 +76,11 @@ const Hexmap = (props) => {
                 .style("fill", d => d3.color(d.length))
     }
 
-    const selectDateRange = (dateRange) => {
-        const filteredData = filterByDateRange(dateRange)
-        const filteredPoints = filteredData.map(d => d.projection)
-
+    const selectDateRange = (selection) => {
+        const filteredPoints = selection.map(d => d.projection)
+        
         updateHexbin(filteredPoints, hexbinGroup)
     }
-
-    const filterByDateRange = (dateRange) => {
-        const dateDifference = d3.timeDay.count(dateRange.from, dateRange.to)
-        if (dateDifference === 0) return []
-    
-        const keys = d3.range(0, dateDifference + 1).map(d => formatDate(d3.timeDay.offset(dateRange.from, d)))
-        
-        const filteredData = props.data.filter(d => { if (keys.includes(d.Date)) return d })
-        return filteredData
-    }   
     
     useLayoutEffect(() => {
         if (props.data && props.mapFile) {
@@ -107,8 +92,8 @@ const Hexmap = (props) => {
     }, [props.data])
     
     useLayoutEffect(() => {
-        if (props.dateRange && hexbinGroup) selectDateRange(props.dateRange)
-    }, [props.dateRange])
+        if (props.selection && hexbinGroup) selectDateRange(props.selection)
+    }, [props.selection])
     
     return ( 
         <svg id="map" ref={mapRef} width={props.width} height={props.height}>

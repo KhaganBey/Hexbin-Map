@@ -1,17 +1,19 @@
-import { useRef, useLayoutEffect } from "react";
+import { useRef, useLayoutEffect } from "react"
 
 import * as d3 from 'd3'
 
-import 'Hex.css'
+import './App.css'
 
 const SelectionChart = props => {
-    
+
     const chartRef = useRef(null)
     
     const margin = {top: 20, right: 20, bottom: 30, left: 75}
     
-    const w = props.width - (margin.left + margin.right)
-    const h = props.height - (margin.top + margin.bottom)  
+    const w = props.width - margin.left - margin.right
+    const h = props.height - margin.top - margin.bottom
+    
+    const formatDate = d3.timeFormat(props.dateFormat)
 
     const chart = d3.select(chartRef.current)
         
@@ -32,14 +34,14 @@ const SelectionChart = props => {
             .x(d => x(d.date))    
             .y0(y(0))
             .y1(d => y(d.count))
-       
+
         g.append("path")
-            .datum(props.dates)
+            .datum(props.dates.filter(d => { if (d3.extent(props.dates, f => f.date).includes(d.date)) { return d }}))
             .attr("fill", "lightsteelblue")
             .attr("d", area)
             
         g.append("path")
-            .datum(props.dates)
+            .datum(props.dates.filter(d => { if (d3.extent(props.dates, f => f.date).includes(d.date)) { return d }}))
             .attr("class", "selection")
             .attr("fill", "steelblue")
             .attr("d", area)
@@ -74,8 +76,8 @@ const SelectionChart = props => {
                 from: x.invert(x0),
                 to: x.invert(x1)
             }
-
-            props.setDateRange(dateRange)
+            
+            props.setSelection(filterByDateRange(dateRange))
 
             updateSelectionChart(x0, x1)
         }
@@ -89,6 +91,16 @@ const SelectionChart = props => {
             .call(brush)         
     }  
     
+    const filterByDateRange = (dateRange) => {
+        const dateDifference = d3.timeDay.count(dateRange.from, dateRange.to)
+        if (dateDifference === 0) return []
+    
+        const keys = d3.range(0, dateDifference + 1).map(d => formatDate(d3.timeDay.offset(dateRange.from, d)))
+        
+        const filteredData = props.data.filter(d => { if (keys.includes(d.Date)) return d })
+        return filteredData
+    }   
+
     const selectionClipPath = chart.append("defs")
             .append("clipPath")
                 .attr("id", "selectionClipPath")
@@ -104,9 +116,9 @@ const SelectionChart = props => {
             .attr("width", x1 - x0)
     }
     
-    const removeSelection = () => {
+    /*const removeSelection = () => {
         chart.select(".brush").call(brush.move, null)
-    }            
+    }    */        
     
     useLayoutEffect(() => {
         if (props.data)
@@ -117,7 +129,7 @@ const SelectionChart = props => {
 
     return ( 
         <svg id='chart' ref={chartRef} width={props.width} height={props.height}>
-        
+            
         </svg>
      );
 }

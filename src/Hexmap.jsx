@@ -4,7 +4,7 @@ import * as d3 from 'd3'
 import {hexbin as Hexbin} from "d3-hexbin"
 import * as topojson from "topojson-client"
 
-import './App.css'
+import './Hex.css'
  
 const Hexmap = (props) => {
     
@@ -75,7 +75,7 @@ const Hexmap = (props) => {
             .merge(hexagon)    
                 .style("fill", d => d3.color(d.length))
     }
-
+    
     const selectDateRange = (selection) => {
         const filteredPoints = selection.map(d => d.projection)
         

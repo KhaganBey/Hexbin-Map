@@ -2,11 +2,10 @@ import { useState, useEffect } from 'react'
 
 import * as d3 from 'd3'
 
-import './App.css'
+import './Hex.css'
 import './Hexmap.jsx'
 
 import Hexmap from './Hexmap.jsx'
-import SelectionChart from './SelectionChart.jsx'
 import Selection from './Selection'
 
 function App() {
@@ -26,8 +25,8 @@ function App() {
   
   const dateFormat = "%d-%m-%Y"
   const projection = d3.geoMercator()
-        .scale(150)
-        .translate([mapWidth / 2, mapHeight / 2])   
+    .scale(150)
+    .translate([mapWidth / 2, mapHeight / 2])   
   
   const init = async () => {
     const map = await d3.json('./data/world-50m.json')
@@ -44,7 +43,7 @@ function App() {
   
   return (
     <div className="App">
-      <h1>Project Hexglobe</h1>
+      <h1>Hexbin Map</h1>
       
       <Hexmap mapFile={mapFile} data={data} projection={projection} width={mapWidth} height={mapHeight} selection={selection} />
       

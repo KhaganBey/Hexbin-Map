@@ -2,7 +2,7 @@ import { useRef, useLayoutEffect } from "react"
 
 import * as d3 from 'd3'
 
-import './App.css'
+import './Hex.css'
 
 const SelectionChart = props => {
 
@@ -64,7 +64,7 @@ const SelectionChart = props => {
                 .attr("dy", "-55px")
                 .attr("text-anchor", "end")
                 .attr("font-size", "14px")
-                .text("Items / Day")   
+                .text("Data points / Day")   
         
         const brushed = ({ selection }) => {
             if (!selection) return

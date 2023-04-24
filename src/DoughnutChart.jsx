@@ -2,7 +2,7 @@ import {useRef, useLayoutEffect} from 'react'
 
 import * as d3 from 'd3'
 
-import './App.css'
+import './Hex.css'
 
 const DoughnutChart = props => {
 
@@ -74,7 +74,7 @@ const DoughnutChart = props => {
     }, [props.data])
     
     return ( 
-        <svg id='pie' ref={pieRef} width={props.width} height={props.height}>
+        <svg id='doughnut' ref={pieRef} width={props.width} height={props.height}>
             
         </svg>
      );

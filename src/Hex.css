@@ -4,6 +4,16 @@ svg {
   background: #efefef;
 }
 
+text {
+  font-family: sans-serif;
+}
+
+.hexagon {
+  fill: black;
+  stroke: black;
+  stroke-width: .5px;
+}
+
 .land {
   fill: #ccc;
 }
@@ -12,4 +22,20 @@ svg {
   fill: none;
   stroke: #aaa;
   stroke-width: .5px;
+}
+
+#chart {
+  margin: 0;
+  padding: 0;
+  display: inline-block;
+}
+
+#doughnut {
+  margin: 0;
+  padding: 0;
+  display: inline-block;
+}
+
+.percentage {
+  text-anchor: middle;
 }

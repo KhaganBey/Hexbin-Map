@@ -31,3 +31,6 @@ The map you see is a TopoJSON file with specific objects corresponding to landma
 ## D3 Integration with React
 This project uses D3 with [React Refs](https://react.dev/reference/react/useRef) for rendering, meaning the code is mostly portable to a non-React environment. However, manipulating the DOM directly with D3 might be dangerous in a complex React application, so the code would need to be modified for such cases.
 
+## Inspiration
+This project is inspired by [this repository](https://github.com/jeffreymorganio/d3-geo-hexbin) by @jeffreymorganio, although the code looks very different due to version difference and the addition of React to the mix.  
+
